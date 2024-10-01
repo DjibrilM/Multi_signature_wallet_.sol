@@ -46,7 +46,7 @@ describe("MultiSignatureWallet", async () => {
         MAXIMUM_WALLET_PENDING_TRANSACTIONS
       );
 
-      //Should avoid having two asserts in once place 😁
+      //Should avoid having two asserts in one place 😁
       assert.equal(
         (await Contract.i_maximum_signers()).toString(),
         MAXIMUM_WALLET_SIGNERS_COUNT.toString()
