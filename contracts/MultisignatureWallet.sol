@@ -2,10 +2,11 @@
 pragma solidity 0.8.27;
 
 //Errors
-error InvalidApprovalCount();
-error ExceedSignersCount();
+error SignersLenghtExceedMaximumSignersLength();
+error ApprovalCountExceedSignersLength();
 error MiliciousInitiator();
 error NoEnoughMoneyInWallet();
+error InvalidValueSent();
 
 contract MultiSignatureWallet {
     //STRUCTS👇
@@ -84,7 +85,7 @@ contract MultiSignatureWallet {
     //MODIFIERS
     modifier WalletAlreadyCreated(address walletAddress) {
         require(
-            s_wallets[walletAddress].signers.length > 1,
+            s_wallets[walletAddress].signers.length <= 0,
             "Wallet already created"
         );
         _;
@@ -95,8 +96,8 @@ contract MultiSignatureWallet {
      */
     modifier WalletDoesNotExist(address walletAddress) {
         require(
-            s_wallets[walletAddress].signers.length < 1,
-            "Wllet does not exist"
+            s_wallets[walletAddress].signers.length > 0,
+            "Wallet does not exist"
         );
         _;
     }
@@ -167,6 +168,55 @@ contract MultiSignatureWallet {
     }
 
     /**
+     * @dev  The bellow function is in charge of creating a wallet
+     * @param _owner Owner of the wallet or master user
+     * @param _signers All the memembers that can approve a transaction
+     * @param _approvalCount The total number of approval that can initiate a transaction
+     */
+    function createWallet(
+        address _owner,
+        Signer[] memory _signers,
+        uint16 _approvalCount
+    ) external WalletAlreadyCreated(_owner) {
+        //Check if the approval counts is greater than the signers or if
+        // singners are greater that the maximum singners limit.
+        if (_approvalCount > _signers.length) {
+            revert ApprovalCountExceedSignersLength();
+        } else if (_signers.length > i_maximum_signers) {
+            revert SignersLenghtExceedMaximumSignersLength();
+        }
+
+        uint256 signersLength = _signers.length;
+
+        s_wallets[_owner].balance = 0;
+        s_wallets[_owner].approvalCount = _approvalCount;
+
+        for (uint i = 0; i < signersLength; i++) {
+            Signer memory newSigner = Signer(
+                _signers[i].singerAddress,
+                _signers[i].canInitiateTransaction
+            );
+            s_wallets[_owner].signers.push(newSigner);
+        }
+
+        //Wallet owner must also be a signer
+        s_wallets[_owner].signers.push(Signer(i_owner, true));
+    }
+
+    /**
+     * @dev The bellow function is responsible for funding a given wallet.
+     * @param _walletAddress Targeted address.
+     */
+    function fundWallet(
+        address _walletAddress
+    ) external payable WalletDoesNotExist(_walletAddress) {
+        if (msg.value < 1) {
+            revert InvalidValueSent();
+        }
+        s_wallets[_walletAddress].balance += msg.value;
+    }
+
+    /**
      * The given function update the approval count of a pending transaction, and send
      * the funds if the count has reach the maximum number of approvals need to sign and
      * send send the funds.
@@ -184,6 +234,8 @@ contract MultiSignatureWallet {
         returns (bool suc)
     {
         PreventDoubleSigning(_walletAddress, _transactionIndex, msg.sender);
+        PendingTransaction memory transaction = s_wallets[_walletAddress]
+            .pendingTransactions[_transactionIndex];
 
         s_wallets[_walletAddress]
             .pendingTransactions[_transactionIndex]
@@ -241,7 +293,14 @@ contract MultiSignatureWallet {
             //Remove the last duplicate
             s_wallets[_walletAddress].pendingTransactions.pop();
 
-            return succ;
+            //Signal the end of the pending transaction
+            emit PendingTransactionClose(
+                transaction.recipient,
+                _walletAddress,
+                msg.sender,
+                transaction.amount,
+                transaction.approvalCount
+            );
         }
 
         return true;
@@ -255,42 +314,6 @@ contract MultiSignatureWallet {
 
     function getAmout(address walletAddress) public view returns (uint256) {
         return s_wallets[walletAddress].balance;
-    }
-
-    /**
-     * @dev  The bellow function is in charge of creating a wallet
-     * @param _owner Owner of the wallet or master user
-     * @param _signers All the memembers that can approve a transaction
-     * @param _approvalCount The total number of approval that can initiate a transaction
-     */
-    function createWallet(
-        address _owner,
-        Signer[] memory _signers,
-        uint16 _approvalCount
-    ) public WalletAlreadyCreated(_owner) {
-        //Check if the approval counts is greater than the signers or if
-        // singners are greater that the maximum singners limit.
-        if (_approvalCount > _signers.length) {
-            revert InvalidApprovalCount();
-        } else if (_signers.length > i_maximum_signers) {
-            revert ExceedSignersCount();
-        }
-
-        uint256 signersLength = _signers.length;
-
-        s_wallets[_owner].balance = 0;
-        s_wallets[_owner].approvalCount = _approvalCount;
-
-        for (uint i = 0; i < signersLength; i++) {
-            Signer memory newSigner = Signer(
-                _signers[i].singerAddress,
-                _signers[i].canInitiateTransaction
-            );
-            s_wallets[_owner].signers.push(newSigner);
-        }
-
-        //Wallet owner must also be a signer
-        s_wallets[_owner].signers.push(Signer(i_owner, true));
     }
 
     /**
@@ -326,6 +349,7 @@ contract MultiSignatureWallet {
             newPendingTransaction
         );
 
+        emit PendingTransactionInitiation(_recipient, _walletAddrss, _amount);
         return true;
     }
 

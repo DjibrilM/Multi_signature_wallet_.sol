@@ -1,0 +1,587 @@
+{
+  "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_maximum_pendingTransaction",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_maximum_signers",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "ExceedSignersCount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidApprovalCount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "MiliciousInitiator",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoEnoughMoneyInWallet",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "walletAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "finalValidator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "approvalCount",
+          "type": "uint256"
+        }
+      ],
+      "name": "PendingTransactionClose",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "walletAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "PendingTransactionInitiation",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "singerAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "canInitiateTransaction",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct MultiSignatureWallet.Signer[]",
+          "name": "_signers",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "uint16",
+          "name": "_approvalCount",
+          "type": "uint16"
+        }
+      ],
+      "name": "createWallet",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "walletAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getAmout",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "walletAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getWallet",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "singerAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "canInitiateTransaction",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct MultiSignatureWallet.Signer[]",
+              "name": "signers",
+              "type": "tuple[]"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "recipient",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "from",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "approvalCount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "previousSigners",
+                  "type": "address[]"
+                }
+              ],
+              "internalType": "struct MultiSignatureWallet.PendingTransaction[]",
+              "name": "pendingTransactions",
+              "type": "tuple[]"
+            },
+            {
+              "internalType": "uint16",
+              "name": "approvalCount",
+              "type": "uint16"
+            },
+            {
+              "internalType": "bool",
+              "name": "locked",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct MultiSignatureWallet.Wallet",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "i_maximum_pendingTransaction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "i_maximum_signers",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "i_owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_initiator",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_walletAddrss",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_recipient",
+          "type": "address"
+        }
+      ],
+      "name": "initiateTransaction",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_walletAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_transactionIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateApprovalCount",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "suc",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x0b0e60e332b7f4b169c404f46fc9f81a6b055c6910d9e8f4928bf977c0796026",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "transactionIndex": 0,
+    "gasUsed": "1080752",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xb4eb7a968f2b2b275670d25c8b61d305ffe7fbae0c59f8fc192449cbcc246c85",
+    "transactionHash": "0x0b0e60e332b7f4b169c404f46fc9f81a6b055c6910d9e8f4928bf977c0796026",
+    "logs": [],
+    "blockNumber": 1,
+    "cumulativeGasUsed": "1080752",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "10",
+    "10"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "e275a21dd7ec20db865cbdc97843a5e9",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.27+commit.40a35a09\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_maximum_pendingTransaction\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_maximum_signers\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"ExceedSignersCount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidApprovalCount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"MiliciousInitiator\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoEnoughMoneyInWallet\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"walletAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"finalValidator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"approvalCount\",\"type\":\"uint256\"}],\"name\":\"PendingTransactionClose\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"walletAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"PendingTransactionInitiation\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"singerAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"canInitiateTransaction\",\"type\":\"bool\"}],\"internalType\":\"struct MultiSignatureWallet.Signer[]\",\"name\":\"_signers\",\"type\":\"tuple[]\"},{\"internalType\":\"uint16\",\"name\":\"_approvalCount\",\"type\":\"uint16\"}],\"name\":\"createWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"walletAddress\",\"type\":\"address\"}],\"name\":\"getAmout\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"walletAddress\",\"type\":\"address\"}],\"name\":\"getWallet\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"singerAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"canInitiateTransaction\",\"type\":\"bool\"}],\"internalType\":\"struct MultiSignatureWallet.Signer[]\",\"name\":\"signers\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"approvalCount\",\"type\":\"uint256\"},{\"internalType\":\"address[]\",\"name\":\"previousSigners\",\"type\":\"address[]\"}],\"internalType\":\"struct MultiSignatureWallet.PendingTransaction[]\",\"name\":\"pendingTransactions\",\"type\":\"tuple[]\"},{\"internalType\":\"uint16\",\"name\":\"approvalCount\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"locked\",\"type\":\"bool\"}],\"internalType\":\"struct MultiSignatureWallet.Wallet\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"i_maximum_pendingTransaction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"i_maximum_signers\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"i_owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_initiator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_walletAddrss\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_recipient\",\"type\":\"address\"}],\"name\":\"initiateTransaction\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_walletAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_transactionIndex\",\"type\":\"uint256\"}],\"name\":\"updateApprovalCount\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"suc\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"createWallet(address,(address,bool)[],uint16)\":{\"details\":\"The bellow function is in charge of creating a wallet\",\"params\":{\"_approvalCount\":\"The total number of approval that can initiate a transaction\",\"_owner\":\"Owner of the wallet or master user\",\"_signers\":\"All the memembers that can approve a transaction\"}},\"initiateTransaction(address,address,uint256,address)\":{\"params\":{\"_amount\":\"The amount of money to be sent.\",\"_initiator\":\"Initiator of the transaction.\",\"_recipient\":\"the recipient address.\",\"_walletAddrss\":\"The given wallet address.\"}},\"updateApprovalCount(address,uint256)\":{\"params\":{\"_transactionIndex\":\"The transaction's index based on the given wallet.\",\"_walletAddress\":\"Sender's wallet address.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"updateApprovalCount(address,uint256)\":{\"notice\":\"The given function update the approval count of a pending transaction, and send the funds if the count has reach the maximum number of approvals need to sign and send send the funds.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/MultisignatureWallet.sol\":\"MultiSignatureWallet\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":100},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/MultisignatureWallet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity 0.8.27;\\n\\n//Errors\\nerror InvalidApprovalCount();\\nerror ExceedSignersCount();\\nerror MiliciousInitiator();\\nerror NoEnoughMoneyInWallet();\\n\\ncontract MultiSignatureWallet {\\n    //STRUCTS\\ud83d\\udc47\\n    /**\\n     * @dev This struct describes a pending transaction within a given wallet,\\n     *  and one wallet can have many pending transactions\\n     * @param repcipient The recipient of the transaction;\\n     * @param from The address that initiated the transaction\\n     * @param amount The transaction amount\\n     * @param approvalCount the number of validations that have been declared\\n     * @param param The previous signers parameter keep track of all the people\\n     *              Who have contributed to the signing process, this prevent\\n     *              single signing loop, which consists of one signer having to\\n     *              sign for all the others .\\n     */\\n    struct PendingTransaction {\\n        address recipient;\\n        address from;\\n        uint256 amount;\\n        uint256 approvalCount;\\n        address[] previousSigners;\\n    }\\n\\n    /**\\n     * @dev Signers are people that can validate a transaction.\\n     *       Signers within a wallet don't hold the same permission some can initiate\\n     *       transactions and other can't.\\n     * @param canInitiateTransaction This indicates the whether this singer can initiate a transaction or not.\\n     */\\n    struct Signer {\\n        address singerAddress;\\n        bool canInitiateTransaction;\\n    }\\n\\n    /**\\n     * @dev This struct describes all the available parameters of a wallet.\\n     * @param amount The total amount of funds in the wallet.\\n     * @param the The locked parameter is used to lock the wallet when a withdraw\\n     *            is initiated, this prevents things like Reentrancy Attack\\n     * @param signers The list of validators allowed to sign transactions.\\n     * @param pendingTransaction A list of transaction IDs that haven't been validated yet.\\n     *        A wallet can have multiple pending transactions\\n     */\\n    struct Wallet {\\n        uint256 balance;\\n        Signer[] signers;\\n        PendingTransaction[] pendingTransactions;\\n        uint16 approvalCount;\\n        bool locked;\\n    }\\n\\n    //STATE VARIABLES AND MAPPINGS\\ud83d\\udc47\\n    address public immutable i_owner;\\n    uint256 public immutable i_maximum_pendingTransaction;\\n    uint256 public immutable i_maximum_signers;\\n\\n    mapping(address => Wallet) internal s_wallets;\\n\\n    //EVENTS\\ud83d\\udc47\\n\\n    //Event fired when a transaction is initiated\\n    event PendingTransactionInitiation(\\n        address indexed recipient,\\n        address indexed walletAddress,\\n        uint256 amount\\n    );\\n    //Fired when pending counts reached and when the funds are sent to the recipient;\\n    event PendingTransactionClose(\\n        address indexed recipient,\\n        address indexed walletAddress,\\n        address finalValidator,\\n        uint256 amount,\\n        uint256 approvalCount\\n    );\\n\\n    //MODIFIERS\\n    modifier WalletAlreadyCreated(address walletAddress) {\\n        require(\\n            s_wallets[walletAddress].signers.length > 1,\\n            \\\"Wallet already created\\\"\\n        );\\n        _;\\n    }\\n    /**\\n     * @dev Check if the wallet exists\\n     * @param walletAddress  Wallet address\\n     */\\n    modifier WalletDoesNotExist(address walletAddress) {\\n        require(\\n            s_wallets[walletAddress].signers.length < 1,\\n            \\\"Wllet does not exist\\\"\\n        );\\n        _;\\n    }\\n\\n    modifier NoReentrancy(address _walletAddress) {\\n        require(!s_wallets[_walletAddress].locked, \\\"No re-entrency\\\");\\n        s_wallets[_walletAddress].locked = true;\\n        _;\\n        s_wallets[_walletAddress].locked = false;\\n    }\\n\\n    /**\\n     * @dev The bellow modifier checkes the the initiror is legit and if they can initiate a transaction\\n     * @param _signers  List of signers withing the given wallet\\n     * @param _inititor The transaction initiator\\n     */\\n    modifier CanInitiateTransaction(\\n        Signer[] memory _signers,\\n        address _inititor\\n    ) {\\n        Signer memory signer;\\n        for (uint i = 0; i < _signers.length; i++) {\\n            if (_signers[i].singerAddress == _inititor) {\\n                signer = _signers[i];\\n            }\\n        }\\n        if (!signer.canInitiateTransaction) {\\n            revert MiliciousInitiator();\\n        }\\n        _;\\n    }\\n\\n    modifier IsValidSigner(address _walletAddress, address _signer) {\\n        bool isSigner;\\n        uint256 signersLength = s_wallets[_walletAddress].signers.length;\\n        for (uint i = 0; i < signersLength; i++) {\\n            if (s_wallets[_walletAddress].signers[i].singerAddress == _signer) {\\n                isSigner = true;\\n            }\\n        }\\n\\n        require(isSigner, \\\"Invalid signer\\\");\\n        _;\\n    }\\n\\n    //Constructor\\n    constructor(\\n        address _owner,\\n        uint256 _maximum_pendingTransaction,\\n        uint256 _maximum_signers\\n    ) {\\n        i_owner = _owner;\\n        i_maximum_pendingTransaction = _maximum_pendingTransaction;\\n        i_maximum_signers = _maximum_signers;\\n    }\\n\\n    /**\\n     * The receive function will send back the fund to the send if they don't have a wallet yet\\n     */\\n    receive() external payable {\\n        require(\\n            s_wallets[msg.sender].signers.length < 1,\\n            \\\"Don't have a wallet yet\\\"\\n        );\\n\\n        //Increament the balance of the sender\\n        s_wallets[msg.sender].balance += msg.value;\\n    }\\n\\n    /**\\n     * The given function update the approval count of a pending transaction, and send\\n     * the funds if the count has reach the maximum number of approvals need to sign and\\n     * send send the funds.\\n     * @param _walletAddress Sender's wallet address.\\n     * @param _transactionIndex The transaction's index based on the given wallet.\\n     */\\n    function updateApprovalCount(\\n        address _walletAddress,\\n        uint256 _transactionIndex\\n    )\\n        external\\n        payable\\n        NoReentrancy(_walletAddress)\\n        IsValidSigner(_walletAddress, msg.sender)\\n        returns (bool suc)\\n    {\\n        PreventDoubleSigning(_walletAddress, _transactionIndex, msg.sender);\\n        PendingTransaction memory transaction = s_wallets[_walletAddress]\\n            .pendingTransactions[_transactionIndex];\\n\\n        s_wallets[_walletAddress]\\n            .pendingTransactions[_transactionIndex]\\n            .approvalCount += 1;\\n\\n        s_wallets[_walletAddress]\\n            .pendingTransactions[_transactionIndex]\\n            .previousSigners\\n            .push(msg.sender);\\n\\n        if (\\n            s_wallets[_walletAddress]\\n                .pendingTransactions[_transactionIndex]\\n                .approvalCount >= s_wallets[_walletAddress].approvalCount\\n        ) {\\n            address payable recipient = payable(\\n                s_wallets[_walletAddress]\\n                    .pendingTransactions[_transactionIndex]\\n                    .recipient\\n            );\\n\\n            uint256 amount = s_wallets[_walletAddress]\\n                .pendingTransactions[_transactionIndex]\\n                .amount;\\n\\n            (bool succ, ) = recipient.call{value: amount}(\\\"\\\");\\n\\n            require(succ, \\\"Failed to transfer funds\\\");\\n\\n            s_wallets[_walletAddress].balance -= amount;\\n\\n            //Delete the pending transaction from pending transactions list\\n            uint256 pendingTransactionsLength = s_wallets[_walletAddress]\\n                .pendingTransactions\\n                .length;\\n\\n            if (pendingTransactionsLength == 1) {\\n                s_wallets[_walletAddress].pendingTransactions.pop();\\n\\n                return true;\\n            }\\n\\n            //Array Remove An Element By Shifting.\\n            // Resource about the implementation => https://www.youtube.com/watch?v=szv2zJcy_Xs&t=140s\\n            for (\\n                uint index = _transactionIndex;\\n                index < pendingTransactionsLength - 1;\\n                index++\\n            ) {\\n                s_wallets[_walletAddress].pendingTransactions[\\n                    index\\n                ] = s_wallets[_walletAddress].pendingTransactions[index + 1];\\n            }\\n\\n            //Remove the last duplicate\\n            s_wallets[_walletAddress].pendingTransactions.pop();\\n\\n            //Signal the end of the pending transaction\\n            emit PendingTransactionClose(\\n                transaction.recipient,\\n                _walletAddress,\\n                msg.sender,\\n                transaction.amount,\\n                transaction.approvalCount\\n            );\\n        }\\n\\n        return true;\\n    }\\n\\n    function getWallet(\\n        address walletAddress\\n    ) public view returns (Wallet memory) {\\n        return s_wallets[walletAddress];\\n    }\\n\\n    function getAmout(address walletAddress) public view returns (uint256) {\\n        return s_wallets[walletAddress].balance;\\n    }\\n\\n    /**\\n     * @dev  The bellow function is in charge of creating a wallet\\n     * @param _owner Owner of the wallet or master user\\n     * @param _signers All the memembers that can approve a transaction\\n     * @param _approvalCount The total number of approval that can initiate a transaction\\n     */\\n    function createWallet(\\n        address _owner,\\n        Signer[] memory _signers,\\n        uint16 _approvalCount\\n    ) public WalletAlreadyCreated(_owner) {\\n        //Check if the approval counts is greater than the signers or if\\n        // singners are greater that the maximum singners limit.\\n        if (_approvalCount > _signers.length) {\\n            revert InvalidApprovalCount();\\n        } else if (_signers.length > i_maximum_signers) {\\n            revert ExceedSignersCount();\\n        }\\n\\n        uint256 signersLength = _signers.length;\\n\\n        s_wallets[_owner].balance = 0;\\n        s_wallets[_owner].approvalCount = _approvalCount;\\n\\n        for (uint i = 0; i < signersLength; i++) {\\n            Signer memory newSigner = Signer(\\n                _signers[i].singerAddress,\\n                _signers[i].canInitiateTransaction\\n            );\\n            s_wallets[_owner].signers.push(newSigner);\\n        }\\n\\n        //Wallet owner must also be a signer\\n        s_wallets[_owner].signers.push(Signer(i_owner, true));\\n    }\\n\\n    /**\\n     * @param _initiator Initiator of the transaction.\\n     * @param _walletAddrss The given wallet address.\\n     * @param _amount The amount of money to be sent.\\n     * @param _recipient the recipient address.\\n     */\\n    function initiateTransaction(\\n        address _initiator,\\n        address _walletAddrss,\\n        uint256 _amount,\\n        address _recipient\\n    )\\n        public\\n        CanInitiateTransaction(s_wallets[_walletAddrss].signers, _initiator)\\n        WalletDoesNotExist(_walletAddrss)\\n        returns (bool)\\n    {\\n        if (_amount > s_wallets[_walletAddrss].balance) {\\n            revert NoEnoughMoneyInWallet();\\n        }\\n\\n        PendingTransaction memory newPendingTransaction = PendingTransaction({\\n            amount: _amount,\\n            recipient: _recipient,\\n            from: _initiator,\\n            approvalCount: 0,\\n            previousSigners: new address[](0)\\n        });\\n\\n        s_wallets[_walletAddrss].pendingTransactions.push(\\n            newPendingTransaction\\n        );\\n\\n        emit PendingTransactionInitiation(_recipient, _walletAddrss, _amount);\\n        return true;\\n    }\\n\\n    function PreventDoubleSigning(\\n        address _wallet_address,\\n        uint256 _transactionIndex,\\n        address _signer\\n    ) internal view {\\n        address[] memory signers = s_wallets[_wallet_address]\\n            .pendingTransactions[_transactionIndex]\\n            .previousSigners;\\n\\n        for (uint i = 0; i < signers.length; i++) {\\n            require(signers[i] != _signer, \\\"Double signing not allowed\\\");\\n        }\\n    }\\n}\\n\\n\",\"keccak256\":\"0x988376a5e165f41af95fec6404fa973ec1f9ea297a96b8e6ea9437b65c99b767\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60e03461009d57601f61134a38819003918201601f19168301916001600160401b038311848410176100a25780849260609460405283398101031261009d578051906001600160a01b038216820361009d57604060208201519101519160805260a05260c05260405161129190816100b9823960805181818161012201526105a0015260a0518161086f015260c05181818161052d01526108340152f35b600080fd5b634e487b7160e01b600052604160045260246000fdfe60808060405260043610156100a7575b50361561001b57600080fd5b3360005260006020526001806040600020015410156100685733600052600060205260406000208054903482018092116100525755005b634e487b7160e01b600052601160045260246000fd5b60405162461bcd60e51b8152602060048201526017602482015276111bdb89dd081a185d994818481dd85b1b195d081e595d604a1b6044820152606490fd5b60003560e01c90816304d0a647146108925750806317b5e24514610857578063297c51e71461081c5780634cf4ecbb146106d15780636e8ef2191461046557806378297c6e1461019057806394599f98146101565763dba6335f1461010c573861000f565b34610151576000366003190112610151576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b600080fd5b34610151576020366003190112610151576001600160a01b03610177610ade565b1660005260006020526020604060002054604051908152f35b34610151576080366003190112610151576101a9610ade565b6024356001600160a01b038116919082900361015157604435916064356001600160a01b0381169190829003610151578060009493945260006020526101f56001604060002001610b62565b9160405161020281610b0f565b60008152600060208201529360009560018060a01b0316955b845181101561025f57866001600160a01b0361023783886111ee565b51511614610248575b60010161021b565b9450600161025686866111ee565b51959050610240565b5085935060208501511561045457826000526000602052600180604060002001541015610418578260005260006020526040600020548111610407576040516020946102ab8683610b2a565b600082526000368137604051906102c182610af4565b848252868201908152604080830185815260006060850181815260808601968752898252818b529290206002018054600160401b8110156103db5761030b91600182018155610cab565b9390936103f157935183546001600160a01b03199081166001600160a01b03928316178555945160018501805490961691161790935591516002820155905160038201559051805191600401906001600160401b0383116103db5790868392610375829584610cc7565b01906000528260002060005b8381106103be57505050507f491796f86172b6c55c4a2fcbee0a593df7a37150b3c0fb48fd5afae2de8cd15e91604051908152a360405160018152f35b82516001600160a01b031681830155889490920191600101610381565b634e487b7160e01b600052604160045260246000fd5b634e487b7160e01b600052600060045260246000fd5b6399bc3d5b60e01b60005260046000fd5b60405162461bcd60e51b815260206004820152601460248201527315db1b195d08191bd95cc81b9bdd08195e1a5cdd60621b6044820152606490fd5b6302bb487960e51b60005260046000fd5b346101515760603660031901126101515761047e610ade565b602435906001600160401b03821161015157366023830112156101515781600401356104a981610b4b565b926104b76040519485610b2a565b8184526024602085019260061b8201019036821161015157602401915b818310610682575050506044359061ffff82168092036101515760018060a01b0316918260005260006020526001806040600020015411156106445780518083111561052b576362eb81ff60e01b60005260046000fd5b7f0000000000000000000000000000000000000000000000000000000000000000106106335780516000848152602081905260408120818155600301805461ffff1916909417909355915b8281106105d8578360005260006020526105d660016040600020016040519061059e82610b0f565b7f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316825260016020830152611202565b005b60019061062d6001600160a01b036105f083866111ee565b51511660206105ff84876111ee565b51015115156040519161061183610b0f565b8252602082015286600052600060205283604060002001611202565b01610576565b632e65e4a760e11b60005260046000fd5b60405162461bcd60e51b815260206004820152601660248201527515d85b1b195d08185b1c9958591e4818dc99585d195960521b6044820152606490fd5b604083360312610151576040519061069982610b0f565b83356001600160a01b0381168103610151578252602084013590811515820361015157826020928360409501528152019201916104d4565b6040366003190112610151576106e5610ade565b6001600160a01b03811660008181526020819052604090206003015460101c60ff166107e657600081815260208190526040812060038101805462ff000019166201000017905560010154815b8181106107a9575050156107735761074f60209260243590610dfb565b9060005260008252600360406000200162ff00001981541690556040519015158152f35b60405162461bcd60e51b815260206004820152600e60248201526d24b73b30b634b21039b4b3b732b960911b6044820152606490fd5b8360005260006020526107c3816001604060002001610c7d565b50546001600160a01b031633146107dd575b600101610732565b600192506107d5565b60405162461bcd60e51b815260206004820152600e60248201526d4e6f2072652d656e7472656e637960901b6044820152606490fd5b346101515760003660031901126101515760206040517f00000000000000000000000000000000000000000000000000000000000000008152f35b346101515760003660031901126101515760206040517f00000000000000000000000000000000000000000000000000000000000000008152f35b3461015157602036600319011261015157600060806108af610ade565b926108b981610af4565b8281526060602082015260606040820152826060820152015260018060a01b0316600052600060205260406000206040516108f381610af4565b8154815261090360018301610b62565b90602081019182526002830192835461091b81610b4b565b946109296040519687610b2a565b818652602086019060005260206000206000915b838310610ac05750505050600390604083019485520154606082019361ffff8216855260ff608084019260101c1615158252604051936020855260c0850193516020860152519260a060408601528351809152602060e0860194019060005b818110610a93575050505191601f19848203016060850152825180825260208201916020808360051b8301019501926000915b8383106109f057885161ffff1660808901528551151560a089015287870388f35b9091929395601f198282030183528651602060c0608060a085019360018060a01b03815116865260018060a01b03848201511684870152604081015160408701526060810151606087015201519360a060808201528451809452019201906000905b808210610a7157505050602080600192980193019301919392906109cf565b82516001600160a01b0316845260209384019390920191600190910190610a52565b825180516001600160a01b031687526020908101511515818801526040909601959092019160010161099c565b60056020600192610ad085610c2b565b81520192019201919061093d565b600435906001600160a01b038216820361015157565b60a081019081106001600160401b038211176103db57604052565b604081019081106001600160401b038211176103db57604052565b90601f801991011681019081106001600160401b038211176103db57604052565b6001600160401b0381116103db5760051b60200190565b908154610b6e81610b4b565b92610b7c6040519485610b2a565b818452602084019060005260206000206000915b838310610b9d5750505050565b600160208192604051610baf81610b0f565b60ff8654858060a01b038116835260a01c16151583820152815201920192019190610b90565b906040519182815491828252602082019060005260206000209260005b818110610c09575050610c0792500383610b2a565b565b84546001600160a01b0316835260019485019487945060209093019201610bf2565b90604051610c3881610af4565b82546001600160a01b03908116825260018401541660208201526002830154604082015260038301546060820152918290608090610c7890600401610bd5565b910152565b8054821015610c955760005260206000200190600090565b634e487b7160e01b600052603260045260246000fd5b8054821015610c95576000526005602060002091020190600090565b90600160401b81116103db57815491818155828210610ce557505050565b600052602060002091820191015b818110610cfe575050565b60008155600101610cf3565b80548015610d78576000190190610d218282610cab565b6103f15780600060049255600060018201556000600282015560006003820155018054906000815581610d5357505055565b6000526020600020908101905b818110610d6c57505055565b60008155600101610d60565b634e487b7160e01b600052603160045260246000fd5b818114610df7578154916001600160401b0383116103db57610db08383610cc7565b60005260206000209060005260206000208154916000925b848410610dd6575050505050565b600191820180546001600160a01b0390921684860155939091019290610dc8565b5050565b91909160018060a01b031690816000526000602052610e2d6004610e26856002604060002001610cab565b5001610bd5565b9160005b8351811015610ea157336001600160a01b03610e4d83876111ee565b511614610e5c57600101610e31565b60405162461bcd60e51b815260206004820152601a60248201527f446f75626c65207369676e696e67206e6f7420616c6c6f7765640000000000006044820152606490fd5b50915091816000526000602052610ec8610ec2826002604060002001610cab565b50610c2b565b8260005260006020526003610ee4836002604060002001610cab565b50018054906001820180921161005257558260005260006020526004610f11836002604060002001610cab565b50018054600160401b8110156103db57610f3091600182018155610c7d565b81549060031b9033821b9160018060a01b03901b19161790558260005260006020526003610f65836002604060002001610cab565b50015483600052600060205261ffff600360406000200154161115610f8d575b505050600190565b82600094929394526000602052610fab836002604060002001610cab565b5060018060a01b0390541684600052600060205260008080806002610fd589826040852001610cab565b50015480955af13d156111e9573d6001600160401b0381116103db5760405190611009601f8201601f191660200183610b2a565b8152600060203d92013e5b156111a95784600052600060205260406000208054918203918211610052575583600052600060205260026040600020015492600184146111875760001984019384119390845b6100525781811015611117578560005260006020526002604060002001600182018083116100525761108c91610cab565b50908660005260006020526110a8816002604060002001610cab565b9290926103f1578281600194036110c3575b5050018461105b565b8154815460a086901b869003918216821991821617835585840154868401805491909316911617905560028083015490820155600380830154908201556111109160049081019101610d8e565b38806110ba565b5050909291508160005260006020526111366002604060002001610d0a565b7fb251b79dfa86e099a3e692a279a876b2ac0160674c751e10accb9bad65987007606060018060a01b03835116928160408201519101516040519133835260208301526040820152a3388080610f85565b505091905060005260006020526111a46002604060002001610d0a565b600190565b60405162461bcd60e51b81526020600482015260186024820152774661696c656420746f207472616e736665722066756e647360401b6044820152606490fd5b611014565b8051821015610c955760209160051b010190565b8054600160401b8110156103db5761121f91600182018155610c7d565b9190916103f15780518254602092909201516001600160a81b03199092166001600160a01b03919091161790151560a01b60ff60a01b1617905556fea264697066735822122099fc12b28ae83f1a37efbcb901ad0af0cbf488581377a78ce1d2dc0a7ab8b5e164736f6c634300081b0033",
+  "deployedBytecode": "0x60808060405260043610156100a7575b50361561001b57600080fd5b3360005260006020526001806040600020015410156100685733600052600060205260406000208054903482018092116100525755005b634e487b7160e01b600052601160045260246000fd5b60405162461bcd60e51b8152602060048201526017602482015276111bdb89dd081a185d994818481dd85b1b195d081e595d604a1b6044820152606490fd5b60003560e01c90816304d0a647146108925750806317b5e24514610857578063297c51e71461081c5780634cf4ecbb146106d15780636e8ef2191461046557806378297c6e1461019057806394599f98146101565763dba6335f1461010c573861000f565b34610151576000366003190112610151576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b600080fd5b34610151576020366003190112610151576001600160a01b03610177610ade565b1660005260006020526020604060002054604051908152f35b34610151576080366003190112610151576101a9610ade565b6024356001600160a01b038116919082900361015157604435916064356001600160a01b0381169190829003610151578060009493945260006020526101f56001604060002001610b62565b9160405161020281610b0f565b60008152600060208201529360009560018060a01b0316955b845181101561025f57866001600160a01b0361023783886111ee565b51511614610248575b60010161021b565b9450600161025686866111ee565b51959050610240565b5085935060208501511561045457826000526000602052600180604060002001541015610418578260005260006020526040600020548111610407576040516020946102ab8683610b2a565b600082526000368137604051906102c182610af4565b848252868201908152604080830185815260006060850181815260808601968752898252818b529290206002018054600160401b8110156103db5761030b91600182018155610cab565b9390936103f157935183546001600160a01b03199081166001600160a01b03928316178555945160018501805490961691161790935591516002820155905160038201559051805191600401906001600160401b0383116103db5790868392610375829584610cc7565b01906000528260002060005b8381106103be57505050507f491796f86172b6c55c4a2fcbee0a593df7a37150b3c0fb48fd5afae2de8cd15e91604051908152a360405160018152f35b82516001600160a01b031681830155889490920191600101610381565b634e487b7160e01b600052604160045260246000fd5b634e487b7160e01b600052600060045260246000fd5b6399bc3d5b60e01b60005260046000fd5b60405162461bcd60e51b815260206004820152601460248201527315db1b195d08191bd95cc81b9bdd08195e1a5cdd60621b6044820152606490fd5b6302bb487960e51b60005260046000fd5b346101515760603660031901126101515761047e610ade565b602435906001600160401b03821161015157366023830112156101515781600401356104a981610b4b565b926104b76040519485610b2a565b8184526024602085019260061b8201019036821161015157602401915b818310610682575050506044359061ffff82168092036101515760018060a01b0316918260005260006020526001806040600020015411156106445780518083111561052b576362eb81ff60e01b60005260046000fd5b7f0000000000000000000000000000000000000000000000000000000000000000106106335780516000848152602081905260408120818155600301805461ffff1916909417909355915b8281106105d8578360005260006020526105d660016040600020016040519061059e82610b0f565b7f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316825260016020830152611202565b005b60019061062d6001600160a01b036105f083866111ee565b51511660206105ff84876111ee565b51015115156040519161061183610b0f565b8252602082015286600052600060205283604060002001611202565b01610576565b632e65e4a760e11b60005260046000fd5b60405162461bcd60e51b815260206004820152601660248201527515d85b1b195d08185b1c9958591e4818dc99585d195960521b6044820152606490fd5b604083360312610151576040519061069982610b0f565b83356001600160a01b0381168103610151578252602084013590811515820361015157826020928360409501528152019201916104d4565b6040366003190112610151576106e5610ade565b6001600160a01b03811660008181526020819052604090206003015460101c60ff166107e657600081815260208190526040812060038101805462ff000019166201000017905560010154815b8181106107a9575050156107735761074f60209260243590610dfb565b9060005260008252600360406000200162ff00001981541690556040519015158152f35b60405162461bcd60e51b815260206004820152600e60248201526d24b73b30b634b21039b4b3b732b960911b6044820152606490fd5b8360005260006020526107c3816001604060002001610c7d565b50546001600160a01b031633146107dd575b600101610732565b600192506107d5565b60405162461bcd60e51b815260206004820152600e60248201526d4e6f2072652d656e7472656e637960901b6044820152606490fd5b346101515760003660031901126101515760206040517f00000000000000000000000000000000000000000000000000000000000000008152f35b346101515760003660031901126101515760206040517f00000000000000000000000000000000000000000000000000000000000000008152f35b3461015157602036600319011261015157600060806108af610ade565b926108b981610af4565b8281526060602082015260606040820152826060820152015260018060a01b0316600052600060205260406000206040516108f381610af4565b8154815261090360018301610b62565b90602081019182526002830192835461091b81610b4b565b946109296040519687610b2a565b818652602086019060005260206000206000915b838310610ac05750505050600390604083019485520154606082019361ffff8216855260ff608084019260101c1615158252604051936020855260c0850193516020860152519260a060408601528351809152602060e0860194019060005b818110610a93575050505191601f19848203016060850152825180825260208201916020808360051b8301019501926000915b8383106109f057885161ffff1660808901528551151560a089015287870388f35b9091929395601f198282030183528651602060c0608060a085019360018060a01b03815116865260018060a01b03848201511684870152604081015160408701526060810151606087015201519360a060808201528451809452019201906000905b808210610a7157505050602080600192980193019301919392906109cf565b82516001600160a01b0316845260209384019390920191600190910190610a52565b825180516001600160a01b031687526020908101511515818801526040909601959092019160010161099c565b60056020600192610ad085610c2b565b81520192019201919061093d565b600435906001600160a01b038216820361015157565b60a081019081106001600160401b038211176103db57604052565b604081019081106001600160401b038211176103db57604052565b90601f801991011681019081106001600160401b038211176103db57604052565b6001600160401b0381116103db5760051b60200190565b908154610b6e81610b4b565b92610b7c6040519485610b2a565b818452602084019060005260206000206000915b838310610b9d5750505050565b600160208192604051610baf81610b0f565b60ff8654858060a01b038116835260a01c16151583820152815201920192019190610b90565b906040519182815491828252602082019060005260206000209260005b818110610c09575050610c0792500383610b2a565b565b84546001600160a01b0316835260019485019487945060209093019201610bf2565b90604051610c3881610af4565b82546001600160a01b03908116825260018401541660208201526002830154604082015260038301546060820152918290608090610c7890600401610bd5565b910152565b8054821015610c955760005260206000200190600090565b634e487b7160e01b600052603260045260246000fd5b8054821015610c95576000526005602060002091020190600090565b90600160401b81116103db57815491818155828210610ce557505050565b600052602060002091820191015b818110610cfe575050565b60008155600101610cf3565b80548015610d78576000190190610d218282610cab565b6103f15780600060049255600060018201556000600282015560006003820155018054906000815581610d5357505055565b6000526020600020908101905b818110610d6c57505055565b60008155600101610d60565b634e487b7160e01b600052603160045260246000fd5b818114610df7578154916001600160401b0383116103db57610db08383610cc7565b60005260206000209060005260206000208154916000925b848410610dd6575050505050565b600191820180546001600160a01b0390921684860155939091019290610dc8565b5050565b91909160018060a01b031690816000526000602052610e2d6004610e26856002604060002001610cab565b5001610bd5565b9160005b8351811015610ea157336001600160a01b03610e4d83876111ee565b511614610e5c57600101610e31565b60405162461bcd60e51b815260206004820152601a60248201527f446f75626c65207369676e696e67206e6f7420616c6c6f7765640000000000006044820152606490fd5b50915091816000526000602052610ec8610ec2826002604060002001610cab565b50610c2b565b8260005260006020526003610ee4836002604060002001610cab565b50018054906001820180921161005257558260005260006020526004610f11836002604060002001610cab565b50018054600160401b8110156103db57610f3091600182018155610c7d565b81549060031b9033821b9160018060a01b03901b19161790558260005260006020526003610f65836002604060002001610cab565b50015483600052600060205261ffff600360406000200154161115610f8d575b505050600190565b82600094929394526000602052610fab836002604060002001610cab565b5060018060a01b0390541684600052600060205260008080806002610fd589826040852001610cab565b50015480955af13d156111e9573d6001600160401b0381116103db5760405190611009601f8201601f191660200183610b2a565b8152600060203d92013e5b156111a95784600052600060205260406000208054918203918211610052575583600052600060205260026040600020015492600184146111875760001984019384119390845b6100525781811015611117578560005260006020526002604060002001600182018083116100525761108c91610cab565b50908660005260006020526110a8816002604060002001610cab565b9290926103f1578281600194036110c3575b5050018461105b565b8154815460a086901b869003918216821991821617835585840154868401805491909316911617905560028083015490820155600380830154908201556111109160049081019101610d8e565b38806110ba565b5050909291508160005260006020526111366002604060002001610d0a565b7fb251b79dfa86e099a3e692a279a876b2ac0160674c751e10accb9bad65987007606060018060a01b03835116928160408201519101516040519133835260208301526040820152a3388080610f85565b505091905060005260006020526111a46002604060002001610d0a565b600190565b60405162461bcd60e51b81526020600482015260186024820152774661696c656420746f207472616e736665722066756e647360401b6044820152606490fd5b611014565b8051821015610c955760209160051b010190565b8054600160401b8110156103db5761121f91600182018155610c7d565b9190916103f15780518254602092909201516001600160a81b03199092166001600160a01b03919091161790151560a01b60ff60a01b1617905556fea264697066735822122099fc12b28ae83f1a37efbcb901ad0af0cbf488581377a78ce1d2dc0a7ab8b5e164736f6c634300081b0033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "createWallet(address,(address,bool)[],uint16)": {
+        "details": "The bellow function is in charge of creating a wallet",
+        "params": {
+          "_approvalCount": "The total number of approval that can initiate a transaction",
+          "_owner": "Owner of the wallet or master user",
+          "_signers": "All the memembers that can approve a transaction"
+        }
+      },
+      "initiateTransaction(address,address,uint256,address)": {
+        "params": {
+          "_amount": "The amount of money to be sent.",
+          "_initiator": "Initiator of the transaction.",
+          "_recipient": "the recipient address.",
+          "_walletAddrss": "The given wallet address."
+        }
+      },
+      "updateApprovalCount(address,uint256)": {
+        "params": {
+          "_transactionIndex": "The transaction's index based on the given wallet.",
+          "_walletAddress": "Sender's wallet address."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "updateApprovalCount(address,uint256)": {
+        "notice": "The given function update the approval count of a pending transaction, and send the funds if the count has reach the maximum number of approvals need to sign and send send the funds."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 55,
+        "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+        "label": "s_wallets",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_address,t_struct(Wallet)44_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_address)dyn_storage": {
+        "base": "t_address",
+        "encoding": "dynamic_array",
+        "label": "address[]",
+        "numberOfBytes": "32"
+      },
+      "t_array(t_struct(PendingTransaction)22_storage)dyn_storage": {
+        "base": "t_struct(PendingTransaction)22_storage",
+        "encoding": "dynamic_array",
+        "label": "struct MultiSignatureWallet.PendingTransaction[]",
+        "numberOfBytes": "32"
+      },
+      "t_array(t_struct(Signer)28_storage)dyn_storage": {
+        "base": "t_struct(Signer)28_storage",
+        "encoding": "dynamic_array",
+        "label": "struct MultiSignatureWallet.Signer[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_struct(Wallet)44_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct MultiSignatureWallet.Wallet)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Wallet)44_storage"
+      },
+      "t_struct(PendingTransaction)22_storage": {
+        "encoding": "inplace",
+        "label": "struct MultiSignatureWallet.PendingTransaction",
+        "members": [
+          {
+            "astId": 12,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "recipient",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address"
+          },
+          {
+            "astId": 14,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "from",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address"
+          },
+          {
+            "astId": 16,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "amount",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 18,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "approvalCount",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 21,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "previousSigners",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_array(t_address)dyn_storage"
+          }
+        ],
+        "numberOfBytes": "160"
+      },
+      "t_struct(Signer)28_storage": {
+        "encoding": "inplace",
+        "label": "struct MultiSignatureWallet.Signer",
+        "members": [
+          {
+            "astId": 25,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "singerAddress",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address"
+          },
+          {
+            "astId": 27,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "canInitiateTransaction",
+            "offset": 20,
+            "slot": "0",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(Wallet)44_storage": {
+        "encoding": "inplace",
+        "label": "struct MultiSignatureWallet.Wallet",
+        "members": [
+          {
+            "astId": 31,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "balance",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 35,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "signers",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_struct(Signer)28_storage)dyn_storage"
+          },
+          {
+            "astId": 39,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "pendingTransactions",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_struct(PendingTransaction)22_storage)dyn_storage"
+          },
+          {
+            "astId": 41,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "approvalCount",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint16"
+          },
+          {
+            "astId": 43,
+            "contract": "contracts/MultisignatureWallet.sol:MultiSignatureWallet",
+            "label": "locked",
+            "offset": 2,
+            "slot": "3",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "128"
+      },
+      "t_uint16": {
+        "encoding": "inplace",
+        "label": "uint16",
+        "numberOfBytes": "2"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
