@@ -1,8 +1,5 @@
 # Multi-signature wallet
 
-
-# Multi-Signature Wallet
-
 A smart contract-based multi-signature wallet that enhances security by requiring multiple signatures for transactions. The wallet ensures that a transaction is executed only when a predefined number of signatures are collected.
 
 ## Features
